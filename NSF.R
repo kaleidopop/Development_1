@@ -17,6 +17,8 @@ schools01 <- read.table(file="~/Documents/2001.csv", sep=",",header=TRUE)
 schools00 <- read.table(file="~/Documents/2000.csv", sep=",",header=TRUE)
 schools99 <- read.table(file="~/Documents/1999.csv", sep=",",header=TRUE)
 
+# pew
+
 schools16<- data.frame(schools16[7],schools16[9], schools16[13], schools16[14], schools16[18], schools16[21:23], schools16[29], schools16[34])
 schools15<- data.frame(schools15[7],schools15[9], schools15[13], schools15[14], schools15[18], schools15[21:23], schools15[29], schools15[34])
 schools14<- data.frame(schools14[7],schools14[9], schools14[13], schools14[14], schools14[18], schools14[21:23], schools14[29], schools14[34])
@@ -37,3 +39,6 @@ schools00<- data.frame(schools00[7],schools00[9], schools00[13], schools00[14], 
 schools99<- data.frame(schools99[7],schools99[9], schools99[13], schools99[14], schools99[18], schools99[21:23], schools99[29], schools99[34])
 
 schoolsall <- rbind(schools99, schools00, schools01, schools02, schools03, schools04, schools05, schools06, schools07, schools08, schools09, schools10, schools11, schools12, schools13, schools14, schools15, schools16)
+
+save(schoolsall, file="NSF.RData")
+#load("NSF.RData)
