@@ -38,7 +38,9 @@ schools01<- data.frame(schools01[7],schools01[9], schools01[13], schools01[14], 
 schools00<- data.frame(schools00[7],schools00[9], schools00[13], schools00[14], schools00[18], schools00[21:23], schools00[29], schools00[34])
 schools99<- data.frame(schools99[7],schools99[9], schools99[13], schools99[14], schools99[18], schools99[21:23], schools99[29], schools99[34])
 
-schoolsall <- rbind(schools99, schools00, schools01, schools02, schools03, schools04, schools05, schools06, schools07, schools08, schools09, schools10, schools11, schools12, schools13, schools14, schools15, schools16)
+schoolsall <- rbind(schools99, schools00, schools01, schools02, schools03, schools04, schools05, 
+                    schools06, schools07, schools08, schools09, schools10, schools11, schools12, 
+                    schools13, schools14, schools15, schools16)
 
 save(schoolsall, file="NSF.RData")
 #load("NSF.RData)
