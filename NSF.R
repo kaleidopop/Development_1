@@ -44,3 +44,11 @@ schoolsall <- rbind(schools99, schools00, schools01, schools02, schools03, schoo
 
 save(schoolsall, file="NSF.RData")
 #load("NSF.RData)
+
+
+schoolsall$starting_date <- as.Date(schoolsall$starting_date, format = "%m/%d/%Y") 
+schoolsall$ending_date <- as.Date(schoolsall$ending_date, format = "%m/%d/%Y")
+schoolsall$obligation_action_date <- as.Date(schoolsall$obligation_action_date, format = "%m/%d/%Y")
+class(schoolsall$starting_date)
+
+#pew
