@@ -45,13 +45,24 @@ schoolsall <- rbind(schools99, schools00, schools01, schools02, schools03, schoo
 
 #load("NSF.RData)
 
-
+### TRANSFORMING ROWS/COLUMNS
 schoolsall$starting_date <- as.Date(schoolsall$starting_date, format = "%m/%d/%Y") 
 schoolsall$ending_date <- as.Date(schoolsall$ending_date, format = "%m/%d/%Y")
 schoolsall$obligation_action_date <- as.Date(schoolsall$obligation_action_date, format = "%m/%d/%Y")
 class(schoolsall$starting_date)
 
-res_duration <- c(schoolsall$ending_date - schoolsall$starting_date)/30
-schoolsall <- data.frame(schoolsall, res_duration)
 
+### NEW ROWS/COLUMNS
+res_duration <- c(schoolsall$ending_date - schoolsall$starting_date)/30
+costmon <-  c(schoolsall$fed_funding_amount/schoolsall$res_duration)
+
+
+
+
+###INCLUDING  ROWS/COLUMNS INTO DF
+schoolsall <- data.frame(schoolsall, res_duration)
+schoolsall <- data.frame(schoolsall, costmon)
+
+
+### SAVING THE DF
 save(schoolsall, file="NSF.RData")
