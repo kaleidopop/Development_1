@@ -42,7 +42,7 @@ schoolsall <- rbind(schools99, schools00, schools01, schools02, schools03, schoo
                     schools06, schools07, schools08, schools09, schools10, schools11, schools12, 
                     schools13, schools14, schools15, schools16)
 
-save(schoolsall, file="NSF.RData")
+
 #load("NSF.RData)
 
 
@@ -51,4 +51,7 @@ schoolsall$ending_date <- as.Date(schoolsall$ending_date, format = "%m/%d/%Y")
 schoolsall$obligation_action_date <- as.Date(schoolsall$obligation_action_date, format = "%m/%d/%Y")
 class(schoolsall$starting_date)
 
-#pew
+res_duration <- c(schoolsall$ending_date - schoolsall$starting_date)/30
+schoolsall <- data.frame(schoolsall, res_duration)
+
+save(schoolsall, file="NSF.RData")
