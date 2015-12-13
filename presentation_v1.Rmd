@@ -1,29 +1,28 @@
 ---
-title: "Presentation_Draft"
-author: "Deepa"
+title: "Presentation_Draft version 0"
+author: "Development 1
 date: "December 13, 2015"
 output: ioslides_presentation
 ---
 
-## R Markdown
+## Presentation Title
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+????
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
 
-## Slide with Bullets
+## Slide 1
 
 - Bullet 1
 - Bullet 2
 - Bullet 3
 
-## Slide with R Code and Output
+## Slide 2 
 
 ```{r}
 summary(cars)
 ```
 
-## Slide with Plot
+## Slide 3
 
 ```{r, echo=FALSE}
 plot(cars)
