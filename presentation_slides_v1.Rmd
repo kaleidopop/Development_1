@@ -1,0 +1,30 @@
+---
+title: "presentation"
+author: "Deepa"
+date: "December 13, 2015"
+output: ioslides_presentation
+---
+
+# Title Slide
+
+
+# Research Questions 
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+# NSF Grant Allocations
+
+something about NSF Grant allocations
+
+
+# 2014-2015 NSF Monthly Grant Dollar Allocation 
+
+```{r, echo=FALSE}
+load("NSF.RData)
+
+ggplot(newdata, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type))
+
+```
+
