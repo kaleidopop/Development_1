@@ -1,8 +1,20 @@
+####Total allocations
+## By year , log(grant dollars per month)
+
+##one year
 ggplot(newdata, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
+##two years 2013-2015
 ggplot(newdata1, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
+
+## 2012- 2015
 ggplot(newdata2, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
+
+# 2008 -2015
 ggplot(newdata3, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type))
-ggplot(newdata4, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
+# 1999 - 2015
+ggplot(newdata4, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type))
+# 1999 - 2015 separate plot
+ggplot(newdata4, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type))+ facet_wrap(~action_type) 
 ggplot(newdata, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
 ggplot(newdata5, aes(y=starting_date, x=log(costmon))) + geom_point(aes(color = action_type))
 
