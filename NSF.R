@@ -94,4 +94,174 @@ ggplot(schoolsall,aes(x=obligation_action_date, y = log(costmon))) + geom_point(
 
 
 ch <- gconnect("ilyaperepelitsa@gmail.com", "")
-peew <- gtrends(c("NSF", "government shutdown", "Congress"))
+peew <- gtrends(c("National Science FOundation", "government shutdown"))
+
+
+newdata <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2014-01-01'), ]
+newdata1 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2013-01-01'), ]
+newdata2 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2012-01-01'), ]
+newdata3 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2008-01-01'), ]
+newdata4 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '1999-01-01'), ]
+
+newdata5 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '1999-01-01'), ]
+
+
+newdata6 <- schoolsall[which(schoolsall$principal_place_state_code=='MA'), ]
+
+
+ggplot(newdata, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
+ggplot(newdata1, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
+ggplot(newdata2, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
+ggplot(newdata3, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type))
+ggplot(newdata4, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
+ggplot(newdata5, aes(y=starting_date, x=log(costmon))) + geom_point(aes(color = action_type))
+
+mass <- summary(newdata)
+
+ggplot(schoolsall, aes(x=log(costmon), fill=action_type)) + geom_density(alpha = 0.6)
+
+ggplot(schoolsall, aes(x=log(costmon), fill=cfda_program_title)) + geom_density(alpha = 0.6) + facet_wrap(~cfda_program_title)
+
+
+ggplot(schoolsall, aes(x=log(costmon), fill=fiscal_year)) + geom_density(alpha = 0.6) + facet_wrap(~fiscal_year)
+
+ggplot(schoolsall, aes(x=log(costmon), fill=principal_place_state_code)) + geom_density(alpha = 0.6) + facet_wrap(~principal_place_state_code)
+
+
+ggplot(schoolsall, aes(x = principal_place_state_code, y=log(costmon))) + geom_boxplot() + facet_wrap(~principal_place_state_code)
+
+ggplot(schoolsall, aes( x=log(costmon), fill=cfda_program_title)) + geom_density(alpha = 0.6) + facet_wrap(~cfda_program_title)
+
+
+ggplot(schoolsall, aes(x=log(costmon), fill=cfda_program_title)) +  geom_density(alpha = 0.3) + facet_wrap(~cfda_program_title)
+# scale_y_log10()
+
+
+
+
+
+
+
+states <- c(unique(as.character(schoolsall$principal_place_state_code, incomparables = FALSE)))
+sort(states, decreasing = FALSE)
+
+cfda <- c(unique(as.character(schoolsall$cfda_program_title, incomparables = FALSE)))
+sort(cfda, decreasing = FALSE)
+
+action <- c(unique(as.character(schoolsall$action_type, incomparables = FALSE)))
+sort(action, decreasing = FALSE)
+
+years <- c(unique(as.character(schoolsall$fiscal_year, incomparables = FALSE)))
+years <- sort(years, decreasing = FALSE)
+
+
+
+
+
+
+
+schoolsall$action_type <- as.character(schoolsall$action_type)
+schoolsall$action_type <- as.character(schoolsall$action_type)
+
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Biological Sciences                                                       "] <- "Biological Sciences"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Trans-NSF Recovery Act Research Support                                   "] <- "Trans-NSF Recovery Act Research Support"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Computer and Information Science and Engineering                          "] <- "Computer and Information Science and Engineering"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Education and Human Resources                                             "] <- "Education and Human Resources"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Engineering Grants                                                        "] <- "Engineering Grants"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Geosciences                                                               "] <- "Geosciences"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Mathematical and Physical Sciences                                        "] <- "Mathematical and Physical Sciences"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Office of Cyberinfrastructure                                             "] <- "Office of Cyberinfrastructure"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Office of International and Integrative Activities                        "] <- "Office of International and Integrative Activities"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Office of International Science & Engineering                             "] <- "Office of International Science and Engineering                           "
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Office of International Science and Engineering                           "] <- "Office of International Science and Engineering"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Polar Programs                                                            "] <- "Polar Programs"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Office of Polar Programs                                                  "] <- "Polar Programs"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Social, Behavioral and Economic Sciences                                  "] <- "Social, Behavioral, and Economic Sciences"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Social, Behavioral, and Economic Sciences                                 "] <- "Social, Behavioral, and Economic Sciences"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Trans-NSF Recovery Act Research Support                                   "] <- "Trans-NSF Recovery Act Reasearch Support"
+schoolsall$cfda_program_title[schoolsall$cfda_program_title == "Office of Integrative Activities                                          "] <- "Office of Integrative Activities"
+
+
+schoolsall$action_type[schoolsall$action_type == "A: New assistance action" ] <- "New"
+schoolsall$action_type[schoolsall$action_type == "B: Continuation (funding in succeeding budget period which stemmed from prior agreement to fund amount of the current action)" ] <- "Continue"
+schoolsall$action_type[schoolsall$action_type == "C: Revision (any change in Federal Government's financial obligation or contingent liability in existing assistance transaction amount of the change in funding; or any change in Recipient Name, Recipient Address, Project Period or Project Scope)" ] <- "Revision"
+
+
+schoolsall$cfda_program_title <- as.character(schoolsall$cfda_program_title)
+
+
+statesbycfda <- data.frame()
+statesbyaction <- data.frame()
+statebyyear <- data.frame()
+
+for (i in 1:length(states)){
+newpew <- schoolsall[which(schoolsall$principal_place_state_code == states[i]), ]
+  for (k in 1:length(cfda)){
+neopew <- newpew[which(newpew$cfda_program_title == cfda[k]), ]
+statesbycfda[i, k] <- mean(neopew$costmon)
+}
+
+}
+colnames(statesbycfda)<- c(cfda)
+rownames(statesbycfda)<- c(states)
+
+cf_DFinf2NA <- function(x)
+{
+  for (i in 1:ncol(x)){
+    x[,i][is.infinite(x[,i])] = NA
+  }
+  return(x)
+} 
+statesbycfda<- cf_DFinf2NA(statesbycfda)
+statesbyaction<- cf_DFinf2NA(statesbyaction)
+
+
+
+
+
+for (i in 1:length(states)){
+  newpew <- schoolsall[which(schoolsall$principal_place_state_code == states[i]), ]
+  for (k in 1:length(action)){
+    neopew <- newpew[which(newpew$action_type == action[k]), ]
+    statesbyaction[i, k] <- mean(neopew$costmon)
+  }
+  
+}
+colnames(statesbyaction)<- c(action)
+rownames(statesbyaction)<- c(states)
+
+for (i in 1:length(states)){
+  newpew <- schoolsall[which(schoolsall$principal_place_state_code == states[i]), ]
+  for (k in 1:length(years)){
+    neopew <- newpew[which(newpew$fiscal_year == years[k]), ]
+    statebyyear[i, k] <- sum(neopew$fed_funding_amount)
+  }
+  
+}
+colnames(statebyyear)<- c(years)
+rownames(statebyyear)<- c(states)
+
+
+for (i in 1:length(years)){
+  newsum[i] <- sum(statebyyear[, i])
+  for (k in 1:length(states)){
+    sharesss <- statebyyear[k, i]/newsum[i]*100
+    statebyyear[k, i]<- sharesss
+  }
+  
+}
+
+
+statesbyaction <- statesbyaction[, -4]
+
+news <- vector()
+for (i in 1:length(years)){
+  news[i] <- sum(statebyyear[, i])
+}
+
+sum(statebyyear[,1:4])
+plot(statebyyear[,12])
+
+p3<-ggplot(statebyyear,aes(x=cfda_program_title,y=fed_funding_amount,fill=factor(fiscal_year)), color=factor(fiscal_year)) +  
+  stat_summary(fun.x=mean, geom="bar")
+p3
