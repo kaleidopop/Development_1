@@ -8,6 +8,7 @@ ggplot(newdata5, aes(y=starting_date, x=log(costmon))) + geom_point(aes(color = 
 
 ggplot(schoolsall, aes(y=res_duration, x=log(costmon))) + geom_point(aes(color = action_type))
 ggplot(schoolsall, aes(y=res_duration, x=log(costmon))) + geom_point(aes(color = action_type))
+ggplot(schoolsall, aes(y=res_duration, x=log(costmon))) + geom_point(aes(color = action_type))+ facet_wrap(~action_type)
 
 ggplot(schoolsall,aes(x=obligation_action_date, y = log(costmon))) + geom_point(aes(color= action_type )) 
 
