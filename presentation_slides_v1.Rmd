@@ -22,7 +22,14 @@ something about NSF Grant allocations
 # 2014-2015 NSF Monthly Grant Dollar Allocation 
 
 ```{r, echo=FALSE}
-load("NSF.RData)
+load("NSF.RData")
+library(ggplot2)
+newdata <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2014-01-01'), ]
+newdata1 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2013-01-01'), ]
+newdata2 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2012-01-01'), ]
+newdata3 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2008-01-01'), ]
+newdata4 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '1999-01-01'), ]
+newdata5 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '1999-01-01'), ]
 
 ggplot(newdata, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type))
 
