@@ -1,0 +1,143 @@
+---
+title: 'R&D in US Educational Institutions: Allocation of NSF Grants 2002 - 2015'
+output: ioslides_presentation
+authors: Sahar Alhassan, Kaitlyn Lynes, Deepa Mehta, Ilya Perepelitsa
+widescreen: yes
+---
+## R&D in US Educational Institutions: Allocation of NSF Grants 2002 - 2015    
+
+Presented by Sahar Alhassan, Kaitlyn Lynes,   
+Deepa Mehta, & Ilya Perepelitsa  
+December 14, 2015  
+
+## 1. Project Background 
+
+* National Science Foundation (NSF) is a key engine that funds US-based R&D
+* Our group focused on NSF grant dollars allocated to US institutions from 2002 to 2015
+* We focused on the relationsships between grant type (new, continuing, revised) over time
+* We also examined the types of approved grant projects, as well as institutions and disciplines that received federal funding
+* We also began to explore geographic concentration of grant funding  
+
+## 2. Research Method 
+
+* Started with the NSF Grant Database 
+* Collated yearly data into a single dataset for 2002 - 2015
+* Developed a series of Plots
+
+```{r}
+load("NSF.RData") 
+library(ggplot2) 
+newdata <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2014-01-01'), ] 
+newdata1 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2013-01-01'), ] 
+newdata2 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2012-01-01'), ] 
+newdata3 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2008-01-01'), ] 
+newdata4 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '1999-01-01'), ] 
+newdata5 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '1999-01-01'), ] 
+```
+
+## 3. NSF Monthly Grant Allocation 2014-2015 
+* FINDING
+* FINDING
+```{r, echo=FALSE, warning=FALSE}
+library(ggplot2)
+load("NSF.RData")
+newdata <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2014-01-01'), ] 
+newdata1 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2013-01-01'), ] 
+newdata2 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2012-01-01'), ] 
+newdata3 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2008-01-01'), ] 
+newdata4 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '1999-01-01'), ] 
+newdata5 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '1999-01-01'), ] 
+ggplot(newdata, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type))
+```
+
+## 4. NSF Grant Dollar Allocation by Month over a Two-Year Period: 2013-2015
+* FINDING
+* FINDING
+```{r, echo=FALSE, warning=FALSE}
+ggplot(newdata1, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
+```
+
+## 5. NSF Grant Dollar Allocation by Month over a Thirteen-Year Period: 2002-2015
+* FINDING
+* FINDING
+```{r, echo=FALSE, warning=FALSE}
+ggplot(newdata1, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type)) 
+```
+
+## 6. Two Hypotheses
+1. More research grants were allocated at year-end
+2. 
+
+## 7. Types of NSF Grants 2002-2015
+```{r, echo=FALSE, warning=FALSE}
+ggplot(newdata4, aes(y=log(costmon), x=starting_date)) + geom_point(aes(color = action_type))+ facet_wrap(~action_type)
+```
+
+## 8. NSF Grant Dollar Allocation by Month as a Function of Research Duration
+* Are projects with a longer duration allocated larger grants? 
+```{r, echo=FALSE, warning=FALSE}
+ggplot(schoolsall, aes(y=res_duration, x=log(costmon))) + geom_point(aes(color = action_type))
+```
+
+## 9. NSF Grant Dollars by Research Duration & By Type
+```{r, echo=FALSE, warning=FALSE}
+ggplot(schoolsall, aes(y=res_duration, x=log(costmon))) + geom_point(aes(color = action_type))+ facet_wrap(~action_type)
+```
+
+## 10. Gaps in Research Funding: 2004
+* What accounts for the gap in data in 2004?
+* Is this a gap in data or was research funding halted due to a government shutdown in 2004?  
+```{r, echo=FALSE, warning=FALSE}
+ggplot(schoolsall,aes(x=obligation_action_date, y = log(costmon))) + geom_point(aes(color= action_type )) 
+```
+
+## 11. Density of Grant Types
+```{r, echo=FALSE, warning=FALSE}
+ggplot(schoolsall, aes(x=log(costmon), fill=action_type)) + geom_density(alpha = 0.6)
+```
+
+## 12. Density of Grants - By Subject
+```{r, echo=FALSE, warning=FALSE}
+ggplot(schoolsall, aes(x=log(costmon), fill=cfda_program_title)) + geom_density(alpha = 0.6) + facet_wrap(~cfda_program_title)
+```
+
+## 13. Density of Grants - By Recipient Type
+```{r, echo=FALSE, warning=FALSE}
+ggplot(schoolsall, aes(x=log(costmon), fill=recipient_type)) + geom_density(alpha = 0.6) + facet_wrap(~recipient_type)
+```
+
+
+
+## 14. Density of Grants by Action Type and Recipient Type
+```{r, echo=FALSE, warning=FALSE}
+ggplot(schoolsall, aes(x=log(costmon), fill=action_type)) + geom_density(alpha = 0.6) + facet_wrap(~recipient_type)
+```
+
+
+## 15. Density of Grants by Action Type and by States 
+```{r, echo=FALSE, warning=FALSE}
+ggplot(schoolsall, aes(x=log(costmon), fill=action_type)) + geom_density(alpha = 0.6) + facet_wrap(~principal_place_state_code)
+```
+
+
+## 16. Density of Grants by Action Type and by Subject  
+```{r, echo=FALSE, warning=FALSE}
+ggplot(schoolsall, aes(x=log(costmon), fill=action_type)) + geom_density(alpha = 0.6) + facet_wrap(~cfda_program_title)
+```
+
+
+## 17. OTHER???
+
+CODE??
+
+## 18. Discussion
+
+* Finding
+* Finding 
+
+## 19. Preliminary Conclusions and Next Steps
+
+* Finding
+* Finding 
+
+## 20. Thank You!
