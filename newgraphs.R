@@ -1,3 +1,6 @@
+
+
+
 ### aggregate sum historical and plotted by state
 sumcolbystate <- aggregate(fed_funding_amount ~ principal_place_state_code + fiscal_year, schoolsall, sum)
 ggplot(sumcolbystate, aes(x=fiscal_year, y=fed_funding_amount)) + geom_line(aes(colour = principal_place_state_code))+ facet_wrap(~principal_place_state_code) 
