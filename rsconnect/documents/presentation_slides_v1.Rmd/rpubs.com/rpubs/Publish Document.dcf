@@ -3,6 +3,5 @@ account: rpubs
 server: rpubs.com
 bundleId:
         https://api.rpubs.com/api/v1/document/134664/d4ad5b7d0bff48f3a36824c82a45980b
-url:
-        http://rpubs.com/publish/claim/134664/3f2872e74cfd4b989c0e6279ce162581
-when: 1450057892.74589
+url: http://rpubs.com/kaleidopop/134664
+when: 1450128070.14895
