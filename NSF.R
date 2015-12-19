@@ -45,7 +45,7 @@ schoolsall <- rbind(schools99, schools00, schools01, schools02, schools03, schoo
                     schools13, schools14, schools15, schools16)
 
 
-#load("NSF.RData)
+load("NSF.RData")
 
 ### TRANSFORMING ROWS/COLUMNS
 schoolsall$starting_date <- as.Date(schoolsall$starting_date, format = "%m/%d/%Y") 
@@ -53,8 +53,18 @@ schoolsall$ending_date <- as.Date(schoolsall$ending_date, format = "%m/%d/%Y")
 schoolsall$obligation_action_date <- as.Date(schoolsall$obligation_action_date, format = "%m/%d/%Y")
 class(schoolsall$starting_date)
 
+monstar <- c(months(schoolsall$starting_date))
+mondec <- c(months(schoolsall$obligation_action_date))
+logcost <- c(log(costmon))
 
 
+
+
+### Variable type (column type)
+schoolsall$action_type <- as.factor(schoolsall$action_type)
+schoolsall$recipient_name <- as.factor(schoolsall$recipient_name)
+schoolsall$principal_place_state_code <- as.factor(schoolsall$principal_place_state_code)
+schoolsall$cfda_program_title <- as.factor(schoolsall$cfda_program_title)
 
 
 
@@ -63,7 +73,10 @@ res_duration <- c(schoolsall$ending_date - schoolsall$starting_date)/30
 schoolsall <- data.frame(schoolsall, res_duration)
 costmon <-  c(schoolsall$fed_funding_amount/schoolsall$res_duration)
 schoolsall <- data.frame(schoolsall, costmon)
+schoolsall <- data.frame(schoolsall, monstar)
+schoolsall <- data.frame(schoolsall, mondec)
 
+schoolsall <- data.frame(schoolsall, logcost)
 
 ### SAVING THE DF
 save(schoolsall, file="NSF.RData")
@@ -102,9 +115,11 @@ newdata1 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsal
 newdata2 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2012-01-01'), ]
 newdata3 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '2008-01-01'), ]
 newdata4 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '1999-01-01'), ]
-
 newdata5 <- schoolsall[which(schoolsall$starting_date < '2015-01-01' & schoolsall$starting_date > '1999-01-01'), ]
 
+bigstates <- schoolsall[which(schoolsall$principal_place_state_code == "CA" | schoolsall$principal_place_state_code == "CO" | schoolsall$principal_place_state_code == "DC" | schoolsall$principal_place_state_code == "IL"| schoolsall$principal_place_state_code == "MA"| schoolsall$principal_place_state_code == "NY"| schoolsall$principal_place_state_code == "PA"| schoolsall$principal_place_state_code == "TX"), ]
+
+ma <- schoolsall[which(schoolsall$principal_place_state_code == "MA"), ]
 
 newdata6 <- schoolsall[which(schoolsall$principal_place_state_code=='MA'), ]
 
@@ -187,12 +202,21 @@ schoolsall$action_type[schoolsall$action_type == "B: Continuation (funding in su
 schoolsall$action_type[schoolsall$action_type == "C: Revision (any change in Federal Government's financial obligation or contingent liability in existing assistance transaction amount of the change in funding; or any change in Recipient Name, Recipient Address, Project Period or Project Scope)" ] <- "Revision"
 
 
-schoolsall$cfda_program_title <- as.character(schoolsall$cfda_program_title)
+schoolsall$cfda_program_title <- as.factor(schoolsall$cfda_program_title)
+schoolsall$action_type <- as.factor(schoolsall$action_type)
+schoolsall$principal_place_state_code <- as.factor(schoolsall$principal_place_state_code)
+
 
 
 statesbycfda <- data.frame()
 statesbyaction <- data.frame()
 statebyyear <- data.frame()
+
+
+statemeans <- data.frame()
+statemeansyr <- data.frame()
+cfdameansyr <- data.frame()
+actionmeansyr <- data.frame()
 
 for (i in 1:length(states)){
 newpew <- schoolsall[which(schoolsall$principal_place_state_code == states[i]), ]
@@ -262,6 +286,92 @@ for (i in 1:length(years)){
 sum(statebyyear[,1:4])
 plot(statebyyear[,12])
 
-p3<-ggplot(statebyyear,aes(x=cfda_program_title,y=fed_funding_amount,fill=factor(fiscal_year)), color=factor(fiscal_year)) +  
-  stat_summary(fun.x=mean, geom="bar")
-p3
+
+trata <- data.frame()
+for (i in 1:length(states)){
+  trata <- schoolsall[which(schoolsall$principal_place_state_code == states[i]), ]
+  statemeans[i, 1] <- mean(trata$fed_funding_amount)
+  statemeans[i, 2] <- sd(trata$fed_funding_amount)
+  statemeans[i, 3] <- nrow(trata)
+  }
+  
+colnames(statemeans)<- c("Mean", "SD", "N")
+rownames(statemeans)<- c(states)
+
+
+trata <- data.frame()
+trata1 <- data.frame()
+for (i in 1:length(states)){
+  trata <- schoolsall[which(schoolsall$principal_place_state_code == states[i]), ]
+  for (k in 1:length(years)){
+    trata1 <- trata[which(trata$fiscal_year == years[k]), ]
+    statemeansyr[i, k] <- mean(trata1$fed_funding_amount)
+  }
+  
+}
+
+colnames(statemeansyr)<- c(years)
+rownames(statemeansyr)<- c(states)
+
+
+
+
+
+
+trata <- data.frame()
+trata1 <- data.frame()
+for (i in 1:length(cfda)){
+  trata <- schoolsall[which(schoolsall$cfda_program_title == cfda[i]), ]
+  for (k in 1:length(years)){
+    trata1 <- trata[which(trata$fiscal_year == years[k]), ]
+    cfdameansyr[i, k] <- mean(trata1$fed_funding_amount)
+  }
+  
+}
+rm(cfdameansyr[17,])
+cfda[17] <- "NA"
+colnames(cfdameansyr)<- c(years)
+rownames(cfdameansyr)<- c(cfda)
+
+
+
+trata <- data.frame()
+trata1 <- data.frame()
+for (i in 1:length(action)){
+  trata <- schoolsall[which(schoolsall$action_type == action[i]), ]
+  for (k in 1:length(years)){
+    trata1 <- trata[which(trata$fiscal_year == years[k]), ]
+    actionmeansyr[i, k] <- mean(trata1$fed_funding_amount)
+  }
+  
+}
+rm(cfdameansyr[17,])
+cfda[17] <- "NA"
+colnames(actionmeansyr)<- c(years)
+rownames(actionmeansyr)<- c(action)
+
+
+
+meancolbyyear <- aggregate(fed_funding_amount ~ recipient_name + fiscal_year, schoolsall, mean)
+
+
+
+meancfdabyyear <- aggregate(fed_funding_amount ~ cfda_program_title + fiscal_year, schoolsall, mean)
+ggplot(meancfdabyyear, aes(x=fiscal_year, y=fed_funding_amount)) + geom_line(aes(colour = cfda_program_title))
+ggplot(meancfdabyyear, aes(x=fiscal_year, y=fed_funding_amount)) + geom_line(aes(colour = cfda_program_title))+ facet_wrap(~cfda_program_title) 
+
+
+meanactionbyyear <- aggregate(fed_funding_amount ~ action_type + fiscal_year, schoolsall, mean)
+ggplot(meanactionbyyear, aes(x=fiscal_year, y=fed_funding_amount)) + geom_line(aes(colour = action_type))
+ggplot(meanactionbyyear, aes(x=fiscal_year, y=fed_funding_amount)) + geom_line(aes(colour = action_type))+ facet_wrap(~action_type) 
+
+meanstatebyyear <- aggregate(fed_funding_amount ~ principal_place_state_code + fiscal_year, schoolsall, mean)
+ggplot(meanstatebyyear, aes(x=fiscal_year, y=fed_funding_amount)) + geom_line(aes(colour = principal_place_state_code))
+ggplot(meanstatebyyear, aes(x=fiscal_year, y=fed_funding_amount)) + geom_line(aes(colour = principal_place_state_code))+ facet_wrap(~principal_place_state_code) 
+
+
+
+principal_place_state_code
+
+
+grep("Harvard", schoolsall$recipient_name, value = T)
